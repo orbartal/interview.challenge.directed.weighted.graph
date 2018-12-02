@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-public final class Graph {
+public class Graph {
 	final private List<Node> nodes;
 	final private List<Edge> edges;
 	final private Map<String, Map<String, Edge>> edgesByNodes;
