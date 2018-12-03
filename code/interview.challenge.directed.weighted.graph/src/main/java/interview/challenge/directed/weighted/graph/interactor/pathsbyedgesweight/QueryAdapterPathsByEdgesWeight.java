@@ -3,19 +3,18 @@ package interview.challenge.directed.weighted.graph.interactor.pathsbyedgesweigh
 import java.util.regex.Pattern;
 
 import interview.challenge.directed.weighted.graph.adapter.QueryAdapter;
-import interview.challenge.directed.weighted.graph.interactor.pathsbynodescounter.PathsByNodesCounterAlgorithm;
 import interview.challenge.directed.weighted.graph.model.Graph;
 
 public class QueryAdapterPathsByEdgesWeight implements QueryAdapter {
 
 	static private final String lineRegex = "the number of different routes from [a-z] to [a-z] with a distance of less than [0-9]+";
-	private final PathsByNodesCounterAlgorithm algorithm;
+	private final PathsByEdgesWeightAlgorithm algorithm;
 
 	public QueryAdapterPathsByEdgesWeight() {
-		this(new PathsByNodesCounterAlgorithm());
+		this(new PathsByEdgesWeightAlgorithm());
 	}
 
-	public QueryAdapterPathsByEdgesWeight(PathsByNodesCounterAlgorithm algorithm) {
+	public QueryAdapterPathsByEdgesWeight(PathsByEdgesWeightAlgorithm algorithm) {
 		this.algorithm = algorithm;
 	}
 

@@ -8,7 +8,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import interview.challenge.directed.weighted.graph.interactor.pathsbynodescounter.PathsByNodesCounterAlgorithm;
 import interview.challenge.directed.weighted.graph.model.Graph;
 
 @ExtendWith(MockitoExtension.class)
@@ -18,7 +17,7 @@ public class QueryAdapterPathsByEdgesWeightTest {
 	private Graph graph;
 
 	@Mock
-	private PathsByNodesCounterAlgorithm algorithm;
+	private PathsByEdgesWeightAlgorithm algorithm;
 
 	@InjectMocks
 	private QueryAdapterPathsByEdgesWeight fixture;
