@@ -7,7 +7,7 @@ import interview.challenge.directed.weighted.graph.model.Graph;
 
 public class QueryAdapterDijkstra implements QueryAdapter {
 
-	static private final String lineRegex = "the length of the shortest route \\(in terms of distance to travel\\) from [a-z] to [a-z].";
+	static private final String lineRegex = "the length of the shortest route \\(in terms of distance to travel\\) from [a-z] to [a-z]";
 	private final DijkstraAlgorithm algorithm;
 
 	public QueryAdapterDijkstra() {

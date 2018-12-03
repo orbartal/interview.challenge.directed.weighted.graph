@@ -24,14 +24,14 @@ public class QueryAdapterDijkstraTest {
 
 	@Test
 	void testIsMatchValidInput1() {
-		String input = "The length of the shortest route (in terms of distance to travel) from A to C.".toLowerCase();
+		String input = "The length of the shortest route (in terms of distance to travel) from A to C".toLowerCase();
 		boolean actual = fixture.isMatch(input);
 		Assertions.assertTrue(actual);
 	}
 
 	@Test
 	void testIsMatchValidInput2() {
-		String input = "The length of the shortest route (in terms of distance to travel) from B to B.".toLowerCase();
+		String input = "The length of the shortest route (in terms of distance to travel) from B to B".toLowerCase();
 		boolean actual = fixture.isMatch(input);
 		Assertions.assertTrue(actual);
 	}

@@ -34,7 +34,7 @@ public class QueryAdapterFactoryMapperTest {
 	@Test
 	void testGetQueryDijkstra() {
 		// setup
-		String input = "The length of the shortest route (in terms of distance to travel) from A to C.".toLowerCase();
+		String input = "The length of the shortest route (in terms of distance to travel) from A to C".toLowerCase();
 		// execute
 		Optional<QueryAdapter> actual = fixture.getQuery(input);
 		// verify
