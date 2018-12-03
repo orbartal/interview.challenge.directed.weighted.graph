@@ -34,7 +34,7 @@ public class QueryAdapterPathsByEdgesWeight implements QueryAdapter {
 		String start = args[0];
 		String end = args[1];
 		int min = Integer.parseInt(args[2]);
-		int max = Integer.parseInt(args[3]);
+		int max = Integer.parseInt(args[3])-1;//Including max
 		return algorithm.getNumberOfPaths(graph, start, end, min, max);
 	}
 

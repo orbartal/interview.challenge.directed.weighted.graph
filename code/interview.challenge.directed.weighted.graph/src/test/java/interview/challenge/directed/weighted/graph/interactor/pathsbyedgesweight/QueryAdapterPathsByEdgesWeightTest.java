@@ -41,7 +41,7 @@ public class QueryAdapterPathsByEdgesWeightTest {
 		// setup
 		String line = "The number of different routes from C to C with a distance of less than 30".toLowerCase();
 		Integer expected = 7;
-		Mockito.when(algorithm.getNumberOfPaths(graph, "c", "c", 1, 30)).thenReturn(expected);
+		Mockito.when(algorithm.getNumberOfPaths(graph, "c", "c", 1, 29)).thenReturn(expected);
 		// execute
 		String actual = fixture.execute(graph, line);
 		// verify
