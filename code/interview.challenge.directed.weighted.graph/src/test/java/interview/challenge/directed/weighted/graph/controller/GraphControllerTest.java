@@ -31,31 +31,35 @@ public class GraphControllerTest {
 	private GraphController fixture;
 
 	@Captor
-	ArgumentCaptor<Integer> graphIdCaptor;
+	private ArgumentCaptor<Integer> graphIdCaptor;
 	@Captor
-	ArgumentCaptor<String> queriesCaptor;
+	private ArgumentCaptor<String> queriesCaptor;
 	@Captor
-	ArgumentCaptor<String> writeCaptor;
+	private ArgumentCaptor<String> writeCaptor;
 
 	@Test
 	void testStartWithoutAnyQueries() {
 		// setup
 		String graph = "Graph: AB5, BC4, CD8, DC8, DE6, AD5, CE2, EB3, AE7";
-		Mockito.when(graphUI.read()).thenReturn(graph).thenReturn(EXIT);
+		Mockito.when(graphUI.readGraphAsString()).thenReturn(graph);
+		Mockito.when(graphUI.readCommand()).thenReturn(EXIT);
 		Mockito.when(graphApi.createGraph(graph)).thenReturn(GRAPH_ID);
 		// execute
 		fixture.start();
 		// verify
-		Mockito.verify(graphUI).write("Insert graph:");
-		Mockito.verify(graphUI).write("Insert query:");
-		Mockito.verify(graphUI, Mockito.times(2)).read();
+		Mockito.verify(graphUI).connect();
+		Mockito.verify(graphUI).writeRequestForGraph();
+		Mockito.verify(graphUI).readGraphAsString();
 		Mockito.verify(graphApi).createGraph(graph);
+		Mockito.verify(graphUI).writeRequestForCommand();
+		Mockito.verify(graphUI).readCommand();
+		Mockito.verify(graphUI).close();
 	}
 
 	@Test
 	void testStartWith3Queries() {
 		// setup
-		final String graph = "Graph: AB5, BC4, CD8, DC8, DE6, AD5, CE2, EB3, AE7";
+		String graph = "Graph: AB5, BC4, CD8, DC8, DE6, AD5, CE2, EB3, AE7";
 		final String[] q = { "q1", "q2", "q3" };
 		final String[] a = { "a1", "a2", "a3" };
 		Answer<String> answer = new Answer<String>() {
@@ -69,26 +73,31 @@ public class GraphControllerTest {
 				return "Invalid input";
 			}
 		};
-		Mockito.when(graphUI.read()).thenReturn(graph).thenReturn(q[0]).thenReturn(q[1]).thenReturn(q[2])
-				.thenReturn(EXIT);
+
+		Mockito.when(graphUI.readGraphAsString()).thenReturn(graph);
 		Mockito.when(graphApi.createGraph(graph)).thenReturn(GRAPH_ID);
+		Mockito.when(graphUI.readCommand()).thenReturn(q[0]).thenReturn(q[1]).thenReturn(q[2]).thenReturn(EXIT);
 		Mockito.when(graphApi.query(Mockito.eq(GRAPH_ID), Mockito.anyString())).then(answer);
+
 		// execute
 		fixture.start();
+
 		// verify
-		Mockito.verify(graphUI).write("Insert graph:");
-		Mockito.verify(graphUI, Mockito.times(8)).write(writeCaptor.capture());
-		Mockito.verify(graphUI, Mockito.times(5)).read();
+		Mockito.verify(graphUI).connect();
+		Mockito.verify(graphUI).writeRequestForGraph();
+		Mockito.verify(graphUI).readGraphAsString();
 		Mockito.verify(graphApi).createGraph(graph);
+		Mockito.verify(graphUI, Mockito.times(4)).writeRequestForCommand();
+		Mockito.verify(graphUI, Mockito.times(4)).readCommand();
 		Mockito.verify(graphApi, Mockito.times(3)).query(graphIdCaptor.capture(), queriesCaptor.capture());
+		Mockito.verify(graphUI, Mockito.times(3)).writeResponseToCommand(writeCaptor.capture());
+		Mockito.verify(graphUI).close();
 
 		List<String> writeMessags = writeCaptor.getAllValues();
 		List<String> queriesMessags = queriesCaptor.getAllValues();
 		List<Integer> graphIds = graphIdCaptor.getAllValues();
 
-		String[] expectedWrites = { "Insert graph:", "Insert query:", "Answer: a1", "Insert query:", "Answer: a2",
-				"Insert query:", "Answer: a3", "Insert query:" };
-		Assertions.assertArrayEquals(expectedWrites, writeMessags.toArray());
+		Assertions.assertArrayEquals(a, writeMessags.toArray());
 		Assertions.assertArrayEquals(q, queriesMessags.toArray());
 		Long[] ids = { 1L, 1L, 1L };
 		Assertions.assertArrayEquals(ids, graphIds.toArray());

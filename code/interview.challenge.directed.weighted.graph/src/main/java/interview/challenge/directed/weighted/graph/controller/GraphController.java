@@ -15,17 +15,22 @@ public class GraphController {
 	}
 
 	public void start() {
-		graphUI.write("Insert graph:");
-		String strGraph = graphUI.read();
-		long graphId = graphApi.createGraph(strGraph);
-		while (true) {
-			graphUI.write("Insert query:");
-			String query = graphUI.read();
-			if (EXIT.equalsIgnoreCase(query)) {
-				break;
+		try {
+			graphUI.connect();
+			graphUI.writeRequestForGraph();
+			String strGraph = graphUI.readGraphAsString();
+			long graphId = graphApi.createGraph(strGraph);
+			while (true) {
+				graphUI.writeRequestForCommand();
+				String query = graphUI.readCommand();
+				if (EXIT.equalsIgnoreCase(query)) {
+					break;
+				}
+				String answer = graphApi.query(graphId, query);
+				graphUI.writeResponseToCommand(answer);
 			}
-			String answer = graphApi.query(graphId, query);
-			graphUI.write("Answer: " + answer);
+		} finally {
+			graphUI.close();
 		}
 	}
 
