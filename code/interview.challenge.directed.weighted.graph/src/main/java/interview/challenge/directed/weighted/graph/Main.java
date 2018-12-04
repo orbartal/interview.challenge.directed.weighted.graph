@@ -21,7 +21,6 @@ public class Main {
 		GraphTextualApi graphApi = new GraphTextualApi(graphParser, db, factory);
 		GraphController contoller = new GraphController(ui, graphApi);
 		contoller.start();
-		// ui.close();
 	}
 
 }
