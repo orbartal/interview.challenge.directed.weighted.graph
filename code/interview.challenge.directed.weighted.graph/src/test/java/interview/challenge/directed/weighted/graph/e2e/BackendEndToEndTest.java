@@ -21,7 +21,7 @@ public class BackendEndToEndTest {
 
 	@Test
 	public void testWithPredefinedDataProvider() {
-		testGraphControllerWithDataProvider(new PredefinedDataProvider());
+		testGraphControllerWithDataProvider(new DataProviderHardCoding());
 	}
 
 	private void testGraphControllerWithDataProvider(DataProvider dataProvider) {

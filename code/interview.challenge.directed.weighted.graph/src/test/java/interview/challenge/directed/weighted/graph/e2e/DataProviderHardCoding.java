@@ -2,7 +2,7 @@ package interview.challenge.directed.weighted.graph.e2e;
 
 import java.util.LinkedHashMap;
 
-public class PredefinedDataProvider implements DataProvider {
+public class DataProviderHardCoding implements DataProvider {
 	
 	public String getGraphAsString() {
 		return "Graph: AB5, BC4, CD8, DC8, DE6, AD5, CE2, EB3, AE7";
