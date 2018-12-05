@@ -1,5 +1,9 @@
 package interview.challenge.directed.weighted.graph.e2e;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -20,8 +24,14 @@ import interview.challenge.directed.weighted.graph.external.SingleGraphStore;
 public class BackendEndToEndTest {
 
 	@Test
-	public void testWithPredefinedDataProvider() {
+	public void testWithDataProviderHardCoding() {
 		testGraphControllerWithDataProvider(new DataProviderHardCoding());
+	}
+	
+	@Test
+	public void testWithDataProviderFromFile() throws IOException, URISyntaxException {
+		File file = Paths.get("src", "test", "resources", "test_e2e_input.txt").toFile();
+		testGraphControllerWithDataProvider(new DataProviderFromFile(file));
 	}
 
 	private void testGraphControllerWithDataProvider(DataProvider dataProvider) {
